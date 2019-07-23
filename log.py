@@ -20,6 +20,8 @@ def QueryExecute(querys):
     print(results)
 
 
+print(question1)
+QueryExecute(query1)
 print(question2)
 QueryExecute(query2)
 
