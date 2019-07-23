@@ -8,6 +8,8 @@ query1 = '''SELECT SUBSTRING(path,10) AS slug,
  WHERE path LIKE '%-%'
  GROUP BY path ORDER BY views DESC LIMIT 3;'''
 
+question2 = '2. Who are the most popular article authors of all time?'
+query2 = '''SELECT name, SUM(views) AS total_views FROM authors_data WHERE author BETWEEN 1 AND 4 GROUP BY name, author ORDER BY author;'''
 
 def QueryExecute(querys):
     db = psycopg2.connect("dbname=news")
@@ -18,7 +20,6 @@ def QueryExecute(querys):
     print(results)
 
 
-print(question1)
-QueryExecute(query1)
-
+print(question2)
+QueryExecute(query2)
 
