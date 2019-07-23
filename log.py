@@ -8,6 +8,7 @@ query1 = '''SELECT SUBSTRING(path,10) AS slug,
  WHERE path LIKE '%-%'
  GROUP BY path ORDER BY views DESC LIMIT 3;'''
 
+
 def QueryExecute(querys):
     db = psycopg2.connect("dbname=news")
     c = db.cursor()
