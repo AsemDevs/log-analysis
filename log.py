@@ -41,7 +41,7 @@ def report_results(q):
             slug = out[i]
         else:
             num = out[i]
-            print("\t" + "%s - %d" % (slug, num) + " views")
+            print("\n" + "\t" + "%s - %d" % (slug, num) + " views")
             print("\n")
 
 
@@ -55,7 +55,7 @@ def report_results_q3(q):
         else:
             num = out[i]
             x = format(num/100, '%')
-            print("\t" + slug + " - " + x + " errors")
+            print("\n" + "\t" + slug + " - " + x + " errors")
 
 
 # printing the questions and calling output functions
