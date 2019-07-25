@@ -1,6 +1,8 @@
-# VIEWS LIST
+# Log analysis views
 
-## 1-num_views
+## VIEWS LIST
+
+### 1-num_views
 <!--Number of views for each of the eight articles-->
 
     CREATE VIEW num_views as SELECT SUBSTRING(path,10) AS slug, COUNT(*) as views FROM log WHERE path LIKE '%-%' GROUP BY path ORDER BY views DESC LIMIT 8;
@@ -18,7 +20,7 @@
     so-many-bears             |  84504
     media-obsessed-with-bears |  84383
 
-## 2-article_views
+### 2-article_views
 <!--Number of views for each article and its author -->
 
     CREATE VIEW article_views AS SELECT author, num_views.slug ,views FROM ((articles JOIN authors ON articles.author = authors.id) JOIN num_views ON articles.slug=num_views.slug)ORDER BY author;
@@ -36,7 +38,7 @@
         3 | bad-things-gone           | 170098
         4 | balloon-goons-doomed      |  84557
 
-## 3-authors_data
+### 3-authors_data
 <!-- Name of each author with his articles and its number of views -->
 
      CREATE VIEW authors_data AS SELECT name, author, article_views.slug, CAST(views AS INT) FROM article_views JOIN authors ON authors.id=article_views.author;
@@ -54,7 +56,7 @@
     Anonymous Contributor  |      3 | bad-things-gone           | 170098
     Markoff Chaney         |      4 | balloon-goons-doomed      |  84557
 
-## 4- errors
+### 4- errors
 <!-- Total number of errors for each day -->
 
     CREATE VIEW errors AS SELECT date(time) AS date,COUNT(*) AS errs FROM log WHERE status = '404 NOT FOUND' GROUP BY date ORDER BY date;
@@ -68,7 +70,7 @@
     2016-07-05 |  423
     2016-07-06 |  420
 
-## 5-reqs
+### 5-reqs
 <!-- Total of requests for each day -->
 
     CREATE VIEW reqs AS SELECT date(time), COUNT(*) AS requists* FROM log GROUP BY date(time) ORDER BY date(time);
@@ -82,7 +84,7 @@
     2016-07-21 |    55241
     2016-07-09 |    55236
 
-## 6-ratio
+### 6-ratio
 <!-- The ratio of errors in each day -->
 
     '''sql

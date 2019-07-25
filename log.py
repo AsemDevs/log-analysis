@@ -42,7 +42,7 @@ def report_results(q):
         else:
             num = out[i]
             print("\n" + "\t" + "%s - %d" % (slug, num) + " views")
-            print("\n")
+    print("\n")
 
 
 # Output function To unpack the list of the tuples
@@ -56,6 +56,8 @@ def report_results_q3(q):
             num = out[i]
             x = format(num/100, '%')
             print("\n" + "\t" + slug + " - " + x + " errors")
+    print("\n")
+
 
 
 # printing the questions and calling output functions
