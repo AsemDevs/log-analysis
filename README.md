@@ -68,7 +68,7 @@
     2016-07-05 |  423
     2016-07-06 |  420
 
-## 5-reqs 
+## 5-reqs
 <!-- Total of requests for each day -->
 
     CREATE VIEW reqs AS SELECT date(time), COUNT(*) AS requists* FROM log GROUP BY date(time) ORDER BY date(time);
