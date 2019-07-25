@@ -19,11 +19,16 @@ def QueryExecute(querys):
     print(results)
 
 
-print(question1)
-QueryExecute(query1)
-print(question2)
-QueryExecute(query2)
-print(question3)
-QueryExecute(query3)
+def results(querys):
+    if querys == query3:
+        print(question3)
+    elif querys == query2:
+        print(question2)
+    else:
+        print(question1)
+    QueryExecute(querys)
 
+results(query1)
+results(query2)
+results(query3)
 
