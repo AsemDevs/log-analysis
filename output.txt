@@ -1,0 +1,6 @@
+1. What are the most popular three articles of all time?
+[('candidate-is-jerk', 338647L), ('bears-love-berries', 253801L), ('bad-things-gone', 170098L)]
+2. Who are the most popular article authors of all time?
+[('Ursula La Multa', 507594L), ('Rudolf von Treppenwitz', 423457L), ('Anonymous Contributor', 170098L), ('Markoff Chaney', 84557L)]
+3. On which days did more than 1% of requests lead to errors?
+[('2016-07-17', 2.263)]
