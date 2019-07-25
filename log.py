@@ -1,5 +1,7 @@
-import psycopg2
+import itertools
+from numbers import Number
 
+import psycopg2
 
 question1 = '1. What are the most popular three articles of all time?'
 
@@ -9,26 +11,44 @@ question2 = '2. Who are the most popular article authors of all time?'
 query2 = '''SELECT name, SUM(views) FROM authors_data GROUP BY name, author ORDER BY author;'''
 
 question3 = "3. On which days did more than 1% of requests lead to errors?"
-query3 = '''SELECT date, percent FROM ratio WHERE percent > 1;'''
-def QueryExecute(querys):
+query3 = '''SELECT date, CAST(percent AS numeric) FROM ratio WHERE percent > 1;'''
+def results(querys):
     db = psycopg2.connect("dbname=news")
     c = db.cursor()
     c.execute(querys)
     results = c.fetchall()
     db.close()
-    print(results)
+    return results
+
+r1=results(query1)
+r2=results(query2)
+r3=results(query3)
+
+def report_results(q):
+    # out = list(zip(*q))
+    out = list(itertools.chain(*q))
+    for i in range(len(out)):
+        if i % 2 == 0:
+            slug = out[i]
+        else:
+            num = out[i]
+            print("\t" + "%s - %d" % (slug, num) + " views")
+            print("\n")
+
+def report_results_q3(q):
+    out = list(itertools.chain(*q))
+    for i in range(len(out)):
+        if i % 2 == 0:
+            slug = out[i]
+        else:
+            num = out[i]
+            x = format(num/100,'%')
+            print("\t" + slug +" - "+ x + " errors")
 
 
-def results(querys):
-    if querys == query3:
-        print(question3)
-    elif querys == query2:
-        print(question2)
-    else:
-        print(question1)
-    QueryExecute(querys)
-
-results(query1)
-results(query2)
-results(query3)
-
+print(question1)
+report_results(r1)
+print(question2)
+report_results(r2)
+print(question3)
+report_results_q3(r3)
