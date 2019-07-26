@@ -1,6 +1,6 @@
-import itertools
-from numbers import Number
+#!/usr/bin/env python3
 
+import itertools
 import psycopg2
 
 question1 = '1. What are the most popular three articles of all time?'
@@ -8,8 +8,8 @@ question1 = '1. What are the most popular three articles of all time?'
 query1 = '''SELECT * FROM num_views LIMIT 3;'''
 
 question2 = '2. Who are the most popular article authors of all time?'
-query2 = '''SELECT name, SUM(views) FROM authors_data
- GROUP BY name, author ORDER BY author;'''
+query2 = '''SELECT name, SUM(views) AS views FROM authors_data
+ GROUP BY name ORDER BY views DESC;'''
 
 question3 = "3. On which days did more than 1% of requests lead to errors?"
 query3 = '''SELECT date, CAST(percent AS numeric)
@@ -32,38 +32,28 @@ r2 = results(query2)
 r3 = results(query3)
 
 
-# Output function To unpack the list of the tuples
-# and get only plain text for the first two queries
+# Get only plain text from the queries results
 def report_results(q):
-    out = list(itertools.chain(*q))
-    for i in range(len(out)):
-        if i % 2 == 0:
-            slug = out[i]
-        else:
-            num = out[i]
-            print("\n" + "\t" + "%s - %d" % (slug, num) + " views")
-    print("\n")
-
-
-# Output function To unpack the list of the tuples
-# and get only plain text for the third query and specific edits
-def report_results_q3(q):
-    out = list(itertools.chain(*q))
-    for i in range(len(out)):
-        if i % 2 == 0:
-            slug = out[i]
-        else:
-            num = out[i]
-            x = format(num/100, '%')
-            print("\n" + "\t" + slug + " - " + x + " errors")
-    print("\n")
-
+    tab = "\t"
+    if q == r1 or q == r2:
+        for row in q:
+            print("\n")
+            out = '{title} - {count} views'.format(title=row[0], count=row[1])
+            print(tab + out)
+        print("\n")
+    else:
+        for row in q:
+            print("\n")
+            out3 = '{date} - {count}% errors'.format(date=row[0], count=row[1])
+            print(tab + out3)
+        print("\n")
 
 
 # printing the questions and calling output functions
-print(question1)
-report_results(r1)
-print(question2)
-report_results(r2)
-print(question3)
-report_results_q3(r3)
+if __name__ == '__main__':
+    print(question1)
+    report_results(r1)
+    print(question2)
+    report_results(r2)
+    print(question3)
+    report_results(r3)
